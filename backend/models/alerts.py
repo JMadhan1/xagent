@@ -14,3 +14,8 @@ class Alert(BaseModel):
     message: str
     asset: Optional[str] = None
     value: Optional[float] = None
+
+
+class AIRequest(BaseModel):
+    message: str
+    wallet_address: str

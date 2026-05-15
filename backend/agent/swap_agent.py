@@ -1,31 +1,26 @@
 """
 Swap Agent — Natural Language Swap Handler
-Parses natural language swap commands and executes via OKX DEX skill.
-Example inputs:
-  - "swap 10 USDT to ETH"
-  - "swap 0.5 ETH to USDC if gas is below 20 gwei"
-  - "buy 100 USDT worth of BNB"
+Parses natural language swap commands via Groq (LLaMA), executes via OKX DEX skill.
 """
 
 import re
 import os
 import json
-import anthropic
+from groq import Groq
 from agent.okx_skills import OKXSkills
 
 
 class SwapAgent:
     """
-    Uses Claude to parse natural language swap intent,
-    validates conditions (gas, price), then executes via OKX swap skill.
+    Uses Groq LLaMA to parse NL swap intent,
+    validates conditions (gas, price), then executes via OKX DEX swap skill.
     """
 
     def __init__(self):
         self.okx = OKXSkills()
-        self.anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+        self.client = Groq(api_key=os.getenv("GROQ_API_KEY", ""))
 
     async def execute(self, command: str, wallet_address: str) -> dict:
-        """Main entry: parse NL command → validate → execute swap."""
         parsed = await self._parse_command(command)
 
         if not parsed.get("valid"):
@@ -35,7 +30,6 @@ class SwapAgent:
                 "original_command": command
             }
 
-        # Check conditions if any
         if parsed.get("condition"):
             condition_met, reason = await self._check_condition(parsed["condition"])
             if not condition_met:
@@ -46,7 +40,6 @@ class SwapAgent:
                     "will_retry": True
                 }
 
-        # Execute swap via OKX skill
         result = await self.okx.execute_swap(
             from_token=parsed["from_token"],
             to_token=parsed["to_token"],
@@ -62,67 +55,52 @@ class SwapAgent:
         }
 
     async def _parse_command(self, command: str) -> dict:
-        """Use Claude to parse NL swap command into structured data."""
+        """Use Groq LLaMA to parse NL swap command into structured data."""
         try:
-            message = self.anthropic_client.messages.create(
-                model="claude-sonnet-4-6",
+            resp = self.client.chat.completions.create(
+                model="llama3-70b-8192",
                 max_tokens=300,
-                system="""You are a DeFi swap command parser. Extract swap intent from natural language.
-Return ONLY valid JSON with these fields:
-- valid: boolean
-- from_token: string (symbol like ETH, USDT, BNB)
-- to_token: string
-- amount: number
-- condition: string or null (e.g. "gas < 20 gwei", "ETH price > 4000")
-- error: string (only if valid is false)
-
-Example input: "swap 10 USDT to ETH if gas is below 20 gwei"
-Example output: {"valid": true, "from_token": "USDT", "to_token": "ETH", "amount": 10, "condition": "gas < 20 gwei", "error": null}""",
-                messages=[{"role": "user", "content": command}]
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """You are a DeFi swap command parser. Extract swap intent from natural language.
+Return ONLY valid JSON, no markdown, no explanation:
+{"valid": true, "from_token": "USDT", "to_token": "ETH", "amount": 10, "condition": null, "error": null}"""
+                    },
+                    {"role": "user", "content": command}
+                ]
             )
-            text = message.content[0].text.strip()
+            text = resp.choices[0].message.content.strip()
+            text = text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
         except Exception:
             return self._regex_parse(command)
 
     def _regex_parse(self, command: str) -> dict:
-        """Fallback regex parser if Claude API fails."""
-        command_lower = command.lower()
-        pattern = r"swap\s+([\d.]+)\s+(\w+)\s+to\s+(\w+)"
-        match = re.search(pattern, command_lower)
-        if match:
-            amount, from_tok, to_tok = match.groups()
+        """Fallback regex parser if Groq API fails."""
+        c = command.lower()
+        m = re.search(r"swap\s+([\d.]+)\s+(\w+)\s+to\s+(\w+)", c)
+        if m:
+            amount, from_tok, to_tok = m.groups()
             condition = None
-            if "if gas" in command_lower:
-                gas_match = re.search(r"(\d+)\s*gwei", command_lower)
-                if gas_match:
-                    condition = f"gas < {gas_match.group(1)} gwei"
-            return {
-                "valid": True,
-                "from_token": from_tok.upper(),
-                "to_token": to_tok.upper(),
-                "amount": float(amount),
-                "condition": condition,
-                "error": None
-            }
-        return {"valid": False, "error": f"Could not parse swap command: '{command}'"}
+            if "if gas" in c:
+                gm = re.search(r"(\d+)\s*gwei", c)
+                if gm:
+                    condition = f"gas < {gm.group(1)} gwei"
+            return {"valid": True, "from_token": from_tok.upper(), "to_token": to_tok.upper(),
+                    "amount": float(amount), "condition": condition, "error": None}
+        return {"valid": False, "error": f"Could not parse: '{command}'"}
 
     async def _check_condition(self, condition: str) -> tuple[bool, str]:
-        """Check if a swap condition is met (gas price, token price, etc.)."""
-        condition_lower = condition.lower()
-
-        # Gas condition: "gas < 20 gwei"
-        if "gas" in condition_lower:
-            gas_match = re.search(r"(\d+)\s*gwei", condition_lower)
-            if gas_match:
-                threshold = int(gas_match.group(1))
+        c = condition.lower()
+        if "gas" in c:
+            gm = re.search(r"(\d+)\s*gwei", c)
+            if gm:
+                threshold = int(gm.group(1))
                 gas_data = await self.okx.get_gas_price("1")
                 current_gas = int(gas_data.get("standard", 99))
-                if "<" in condition_lower:
-                    met = current_gas < threshold
-                    return met, f"Gas is {current_gas} gwei (threshold: {threshold} gwei)"
-                elif ">" in condition_lower:
-                    met = current_gas > threshold
-                    return met, f"Gas is {current_gas} gwei (threshold: {threshold} gwei)"
-
+                if "<" in c:
+                    return current_gas < threshold, f"Gas is {current_gas} gwei (threshold: {threshold})"
+                if ">" in c:
+                    return current_gas > threshold, f"Gas is {current_gas} gwei (threshold: {threshold})"
         return True, "Condition check passed"
