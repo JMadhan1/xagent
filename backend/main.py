@@ -1,8 +1,7 @@
 """
-OKX DeFi Command Center — FastAPI Backend
-Main entry point for the agent server.
-Handles wallet monitoring, risk analysis, DeFi signals, NL swaps,
-Auto-Pilot, What-If Simulator, Oracle AI with memory, and PDF reports.
+ArgosX — FastAPI Backend
+Autonomous DeFi agent server. Wallet monitoring, risk analysis, signals,
+NL swaps, Auto-Pilot, What-If Simulator, Oracle AI with memory, and PDF reports.
 """
 
 from fastapi import FastAPI, HTTPException
@@ -26,8 +25,8 @@ from groq import Groq as GroqClient
 load_dotenv()
 
 app = FastAPI(
-    title="OKX DeFi Command Center",
-    description="AI agent for DeFi portfolio monitoring, risk analysis, signals, NL swaps, and Auto-Pilot",
+    title="ArgosX",
+    description="Autonomous AI agent for DeFi portfolio monitoring, risk analysis, signals, NL swaps, and Auto-Pilot",
     version="2.0.0"
 )
 
@@ -90,7 +89,7 @@ conversation_history = {}
 
 @app.get("/")
 async def root():
-    return {"status": "OKX DeFi Command Center is live", "version": "2.0.0"}
+    return {"status": "ArgosX is live", "version": "2.0.0"}
 
 
 @app.get("/health")
@@ -415,7 +414,7 @@ async def generate_report(wallet_address: str):
 </style>
 </head>
 <body>
-<h1>⬡ OKX DeFi Command Center</h1>
+<h1>ArgosX</h1>
 <p class="meta">Portfolio Report · Generated {now} · Wallet: {wallet_address}</p>
 <div class="stat-grid">
   <div class="stat-card"><div class="stat-label">Total Portfolio Value</div><div class="stat-value">${portfolio.get('total_usd', 0):,.2f}</div></div>

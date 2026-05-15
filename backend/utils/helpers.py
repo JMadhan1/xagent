@@ -1,4 +1,4 @@
-"""Shared utility helpers for the OKX DeFi Command Center backend."""
+"""Shared utility helpers for the ArgosX backend."""
 
 
 def format_usd(value: float) -> str:

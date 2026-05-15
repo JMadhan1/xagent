@@ -1,4 +1,4 @@
-# ⬡ OKX DeFi Command Center
+# ArgosX — Autonomous DeFi Agent
 
 > **An autonomous AI agent that watches your DeFi portfolio 24/7, detects risks before they happen, simulates trades before you make them, and executes swaps in plain English — powered by OKX Agentic Wallet + Groq LLaMA.**
 
@@ -26,7 +26,7 @@ Until now.
 
 ## ✅ The Solution
 
-**OKX DeFi Command Center** is an always-on autonomous AI agent that:
+**ArgosX** is an always-on autonomous AI agent that:
 
 ```
 ✅ Monitors your wallet every 60 seconds across ETH, BNB, Polygon

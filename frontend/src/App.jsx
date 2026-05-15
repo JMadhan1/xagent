@@ -1,5 +1,5 @@
 /**
- * OKX DeFi Command Center - Premium Dashboard v3
+ * ArgosX — Autonomous DeFi Agent Dashboard v3
  * Glassmorphism · Bloomberg Terminal · OKX Pro aesthetic
  * All 7 features · MetaMask · Auto-Pilot · Oracle AI
  */
@@ -667,15 +667,8 @@ function HomePage({ onLaunch }) {
 
       {/* Navbar */}
       <nav style={{ padding: "0 40px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `1px solid ${C.border}`, background: `${C.bg}cc`, backdropFilter: "blur(20px)", position: "relative", zIndex: 10 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 9, background: `linear-gradient(135deg, ${C.blue}, ${C.cyan})`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "0.85rem", color: "#fff", boxShadow: `0 4px 20px ${C.blue}55` }}>OK</div>
-          <div>
-            <div style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
-              <span className="grad-text">OKX DeFi</span>
-              <span style={{ color: C.textPri }}> Command Center</span>
-            </div>
-            <div style={{ fontSize: "0.58rem", color: C.textSec, letterSpacing: "0.12em", fontWeight: 600 }}>POWERED BY X-AGENT + OKX AGENTIC WALLET</div>
-          </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img src="/logo-nav.png" alt="ArgosX" style={{ height: 44, objectFit: "contain", filter: "drop-shadow(0 0 12px #06d6ff55)" }} />
         </div>
         <button className="launch-btn" style={{ padding: "10px 28px", fontSize: "0.8rem" }} onClick={onLaunch}>
           Launch Dashboard
@@ -685,36 +678,42 @@ function HomePage({ onLaunch }) {
       {/* Hero */}
       <div style={{ flex: 1, maxWidth: 1200, margin: "0 auto", padding: "60px 40px 20px", width: "100%", position: "relative", zIndex: 2 }}>
 
-        {/* Badge */}
-        <div style={{ animation: "heroFadeIn 0.5s ease both" }}>
-          <div className="hero-badge">
-            <span className="pulse-dot" style={{ background: C.green, width: 7, height: 7 }} />
-            BUILD X-AGENT HACKATHON 2026 -- BUILDER TRACK
+        {/* Hero layout — logo left, text right */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center", marginBottom: 56 }}>
+
+          {/* Left — big logo */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 24, animation: "heroFadeIn 0.7s ease both" }}>
+            <img
+              src="/logo-full.png"
+              alt="ArgosX"
+              style={{ width: "100%", maxWidth: 480, objectFit: "contain", filter: "drop-shadow(0 0 48px #06d6ff44) drop-shadow(0 0 20px #3b82f633)", animation: "floatOrb 6s ease-in-out infinite" }}
+            />
+            <div className="hero-badge" style={{ marginBottom: 0 }}>
+              <span className="pulse-dot" style={{ background: C.green, width: 7, height: 7 }} />
+              BUILD X-AGENT HACKATHON 2026 -- BUILDER TRACK
+            </div>
           </div>
-        </div>
 
-        {/* Hero headline */}
-        <div style={{ animation: "heroFadeIn 0.6s 0.1s ease both", opacity: 0 }}>
-          <h1 style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.08, marginBottom: 20, maxWidth: 780 }}>
-            <span className="grad-text">Autonomous AI Agent</span>
-            <br />
-            <span style={{ color: C.textPri }}>for Your DeFi Portfolio</span>
-          </h1>
-          <p style={{ fontSize: "1.1rem", color: C.textSec, lineHeight: 1.7, maxWidth: 600, marginBottom: 40 }}>
-            Monitors your wallet 24/7, detects risks before they hit,
-            simulates trades before you execute, and swaps in plain English
-            — powered by OKX DEX + Groq LLaMA 3.
-          </p>
-        </div>
+          {/* Right — headline + tagline + CTA */}
+          <div style={{ animation: "heroFadeIn 0.6s 0.15s ease both", opacity: 0 }}>
+            <h1 style={{ fontSize: "clamp(2rem, 3.5vw, 3.4rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 20 }}>
+              <span className="grad-text">Autonomous</span>
+              <br />
+              <span style={{ color: C.textPri }}>DeFi Agent</span>
+            </h1>
+            <p style={{ fontSize: "1rem", color: C.textSec, lineHeight: 1.75, marginBottom: 32 }}>
+              Monitors your wallet 24/7, detects risks before they hit,
+              simulates trades before you execute, and swaps in plain English
+              — powered by OKX DEX + Groq LLaMA 3.
+            </p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button className="launch-btn" onClick={onLaunch}>Launch Dashboard</button>
+              <button className="btn-ghost" style={{ padding: "18px 28px", fontSize: "0.88rem", fontWeight: 700 }} onClick={() => window.open("https://github.com/JMadhan1/xagent", "_blank")}>
+                View on GitHub
+              </button>
+            </div>
+          </div>
 
-        {/* CTA row */}
-        <div style={{ display: "flex", gap: 14, alignItems: "center", marginBottom: 64, animation: "heroFadeIn 0.6s 0.2s ease both", opacity: 0, flexWrap: "wrap" }}>
-          <button className="launch-btn" onClick={onLaunch}>
-            Launch Dashboard
-          </button>
-          <button className="btn-ghost" style={{ padding: "18px 32px", fontSize: "0.9rem", fontWeight: 700 }} onClick={() => window.open("https://github.com/JMadhan1/xagent", "_blank")}>
-            View on GitHub
-          </button>
         </div>
 
         {/* Stats row */}
@@ -864,7 +863,7 @@ function HomePage({ onLaunch }) {
             -- No setup required. Works instantly in demo mode. --
           </div>
           <button className="launch-btn" onClick={onLaunch} style={{ fontSize: "1.05rem", padding: "20px 60px" }}>
-            Open Command Center
+            Open ArgosX
           </button>
         </div>
 
@@ -1101,16 +1100,11 @@ export default function App() {
         {/* NAV */}
         <nav style={{ position: "sticky", top: 0, zIndex: 100, background: `${C.bg}e8`, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${C.blue}, ${C.cyan})`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "0.75rem", color: "#fff", boxShadow: `0 4px 16px ${C.blue}55`, letterSpacing: "-0.04em" }}>OK</div>
-            <div>
-              <div style={{ fontSize: "0.9rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
-                <span className="grad-text">OKX DeFi</span>
-                <span style={{ color: C.textPri }}> Command Center</span>
-              </div>
-              <div style={{ fontSize: "0.6rem", color: C.textSec, letterSpacing: "0.1em", fontWeight: 500 }}>
-                POWERED BY X-AGENT - OKX AGENTIC WALLET
-              </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <img src="/logo-nav.png" alt="ArgosX" style={{ height: 38, objectFit: "contain", filter: "drop-shadow(0 0 10px #06d6ff44)", cursor: "pointer" }} onClick={() => setShowHome(true)} />
+            <div style={{ width: 1, height: 28, background: C.border }} />
+            <div style={{ fontSize: "0.58rem", color: C.textSec, letterSpacing: "0.1em", fontWeight: 600, lineHeight: 1.5 }}>
+              POWERED BY<br/>X-AGENT + OKX
             </div>
           </div>
 
