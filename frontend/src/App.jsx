@@ -712,6 +712,21 @@ function HomePage({ onLaunch }) {
                 View on GitHub
               </button>
             </div>
+            <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span className="pulse-dot" style={{ background: C.green, width: 7, height: 7 }} />
+                <span style={{ fontSize: "0.72rem", color: C.textSec }}>Live at </span>
+                <a href="https://xagent-theta.vercel.app/" target="_blank" rel="noreferrer" style={{ fontSize: "0.72rem", color: C.cyan, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, textDecoration: "none", borderBottom: `1px solid ${C.cyan}44` }}>
+                  xagent-theta.vercel.app
+                </a>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: "0.72rem", color: C.textSec }}>Demo </span>
+                <a href="https://www.youtube.com/watch?v=801dVSauaRw" target="_blank" rel="noreferrer" style={{ fontSize: "0.72rem", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, textDecoration: "none", borderBottom: `1px solid ${C.red}44` }}>
+                  youtube.com/watch?v=801dVSauaRw
+                </a>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -859,8 +874,21 @@ function HomePage({ onLaunch }) {
 
         {/* Bottom CTA */}
         <div style={{ textAlign: "center", paddingBottom: 60, animation: "heroFadeIn 0.6s 0.5s ease both", opacity: 0 }}>
-          <div style={{ fontSize: "0.68rem", color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", marginBottom: 20 }}>
-            -- No setup required. Works instantly in demo mode. --
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="pulse-dot" style={{ background: C.green, width: 8, height: 8 }} />
+              <span style={{ fontSize: "0.7rem", color: C.green, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, letterSpacing: "0.08em" }}>LIVE</span>
+              <a href="https://xagent-theta.vercel.app/" target="_blank" rel="noreferrer" style={{ fontSize: "0.7rem", color: C.cyan, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, textDecoration: "none", borderBottom: `1px solid ${C.cyan}44` }}>
+                xagent-theta.vercel.app
+              </a>
+            </div>
+            <span style={{ color: C.border }}>|</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: "0.7rem", color: C.textSec, fontFamily: "'JetBrains Mono', monospace" }}>DEMO</span>
+              <a href="https://www.youtube.com/watch?v=801dVSauaRw" target="_blank" rel="noreferrer" style={{ fontSize: "0.7rem", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, textDecoration: "none", borderBottom: `1px solid ${C.red}44` }}>
+                Watch on YouTube
+              </a>
+            </div>
           </div>
           <button className="launch-btn" onClick={onLaunch} style={{ fontSize: "1.05rem", padding: "20px 60px" }}>
             Open ArgosX

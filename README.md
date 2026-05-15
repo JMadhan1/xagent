@@ -2,6 +2,8 @@
 
 > **An autonomous AI agent that watches your DeFi portfolio 24/7, detects risks before they happen, simulates trades before you make them, and executes swaps in plain English — powered by OKX Agentic Wallet + Groq LLaMA.**
 
+**Live Demo: https://xagent-theta.vercel.app/**
+
 **🏆 Built for: Build X-Agent Hackathon (Builder Track) · May 15–18, 2026**
 
 ---
@@ -381,14 +383,16 @@ autopilot.start(wallet_address)
 
 ---
 
-## 📹 Demo Highlights (3-min video)
+## 📹 Demo Video
+
+**Watch the full demo: https://www.youtube.com/watch?v=801dVSauaRw**
 
 ```
 0:00 – 0:20   The problem: DeFi users fly blind
 0:20 – 0:50   Portfolio tab: wallet load, risk score 72/100, ETH concentration alert
 0:50 – 1:20   Auto-Pilot: START → live log feed → strategy activated
-1:20 – 1:50   What-If: "go all-in on ETH" → ❌ BAD MOVE (risk 45→95)
-1:50 – 2:20   Swap: "swap 10 USDT to ETH if gas < 20 gwei" → executed via OKX DEX
+1:20 – 1:50   What-If: "go all-in on ETH" → BAD MOVE (risk 45 to 95)
+1:50 – 2:20   Swap: "swap 10 USDT to ETH if gas below 20 gwei" → executed via OKX DEX
 2:20 – 2:50   Oracle AI: "What's my biggest risk?" → specific, data-driven answer
 2:50 – 3:00   Export PDF report → Ctrl+P → done
 ```
