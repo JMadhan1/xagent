@@ -263,7 +263,7 @@ Return ONLY valid JSON, no markdown, no explanation:
 
     try:
         resp = groq_client.chat.completions.create(
-            model="llama3-70b-8192",
+            model="llama-3.3-70b-versatile",
             max_tokens=500,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -324,7 +324,7 @@ If asked about swaps, suggest exact commands. If asked about risk, give a clear 
         groq_client = GroqClient(api_key=os.getenv("GROQ_API_KEY", ""))
         messages_with_system = [{"role": "system", "content": system}] + history[-10:]
         resp = groq_client.chat.completions.create(
-            model="llama3-70b-8192",
+            model="llama-3.3-70b-versatile",
             max_tokens=300,
             messages=messages_with_system
         )
