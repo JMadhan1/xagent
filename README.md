@@ -4,6 +4,10 @@
 
 **Live Demo: https://xagent-theta.vercel.app/**
 
+**Demo Video: https://www.youtube.com/watch?v=801dVSauaRw**
+
+**X Post: https://x.com/jmadhan143/status/2056254247801692420**
+
 **🏆 Built for: Build X-Agent Hackathon (Builder Track) · May 15–18, 2026**
 
 ---
